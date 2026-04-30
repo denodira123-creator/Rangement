@@ -626,8 +626,14 @@ async function createBox() {
     });
     showCreateSuccess({ id: ref.id, name, location, emoji: newEmoji, items: [...newItems] });
   } catch(e) {
-    alert('Erreur Firebase : ' + e.message + '\n\nVérifiez vos règles Firestore (mode test).');
-    if (btn) { btn.disabled=false; btn.textContent='Créer la boîte & générer le QR code'; }
+  console.error("ERREUR FIREBASE :", e);   // 👈 IMPORTANT
+  alert("Erreur Firebase : " + e.message);
+
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = 'Créer la boîte & générer le QR code';
+  }
+}
   }
 }
 
