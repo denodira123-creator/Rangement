@@ -488,8 +488,9 @@ function scanLoop() {
   const code = window.jsQR(img.data, img.width, img.height);
   if (code) {
     stopScanner();
-    const found = boxes[code.data];
-    showScanResult(found ? found : null, found ? 'found' : 'not_found', code.data);
+    const cleanId = code.data.trim();
+    const found = boxes[cleanId];
+    showScanResult(found ? found : null, found ? 'found' : 'not_found', cleanId);
   } else {
     animFrame = requestAnimationFrame(scanLoop);
   }
