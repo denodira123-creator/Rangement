@@ -219,6 +219,7 @@ let newEmoji = '📦', newItems = [], firebaseOk = false;
 // Init Firebase
 try {
   firebase.initializeApp(firebaseConfig);
+  console.log("PROJECT ID ACTUEL :", firebaseConfig.projectId);
   db = firebase.firestore();
   db.enablePersistence().catch(() => {});
   db.collection('boxes').onSnapshot(snap => {
