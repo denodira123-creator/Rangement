@@ -616,27 +616,44 @@ function renderNewItems() {
 async function createBox() {
   const name = document.getElementById('fn')?.value.trim();
   if (!name) { document.getElementById('fn')?.focus(); return; }
-  const location = document.getElementById('fl')?.value||'';
+
+  const location = document.getElementById('fl')?.value || '';
   const btn = document.querySelector('.btn-teal');
-  if (btn) { btn.disabled=true; btn.textContent='Création…'; }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Création…';
+  }
+
   try {
     const ref = await db.collection('boxes').add({
-      name, location, emoji: newEmoji,
+      name,
+      location,
+      emoji: newEmoji,
       items: [...newItems],
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    showCreateSuccess({ id: ref.id, name, location, emoji: newEmoji, items: [...newItems] });
-  } catch(e) {
-  console.error("ERREUR FIREBASE :", e);   // 👈 IMPORTANT
-  alert("Erreur Firebase : " + e.message);
 
-  if (btn) {
-    btn.disabled = false;
-    btn.textContent = 'Créer la boîte & générer le QR code';
+    showCreateSuccess({
+      id: ref.id,
+      name,
+      location,
+      emoji: newEmoji,
+      items: [...newItems]
+    });
+
+  } catch(e) {
+    console.error("ERREUR FIREBASE :", e);
+    alert("Erreur Firebase : " + e.message);
+
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Créer la boîte & générer le QR code';
+    }
   }
 }
-  }
-}
+
+  
 
 function showCreateSuccess(box) {
   const c = document.getElementById('content');
